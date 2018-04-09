@@ -93,3 +93,14 @@ DrugStore(药房):
 	CreateTime
 	ModifyTime
 	Remark
+
+
+Medi(药品):
+	ID
+	Code(国药准字)
+	Name
+	Spec
+	ProducerID(厂家)
+	GuidePrice(指导价)
+	Unit(最小单位)
+	
