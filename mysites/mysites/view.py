@@ -7,3 +7,9 @@ def hello(request):
     context          = {}
     context['hello'] = 'Hello World!'
     return render(request, 'hello.html', context)
+
+def searchOrganization(request):
+	context          = {}
+	context['hello'] = 'Hello World!'
+	return render(request, 'organization/organization_search.html', context)
+	

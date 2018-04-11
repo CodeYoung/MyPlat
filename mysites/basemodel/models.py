@@ -123,7 +123,7 @@ class Medi(models.Model):
 	Name=models.CharField(max_length=100)
 	Spec=models.CharField(max_length=2000)
 	ProducerID=models.IntegerField()
-	GuidePrice=models.DecimalField()
+	GuidePrice=models.DecimalField(max_digits=2,decimal_places=2)
 	DoseUnit=models.CharField(max_length=20)
 	DoseFactor=models.IntegerField()
 	OtpaUnit=models.CharField(max_length=20)
