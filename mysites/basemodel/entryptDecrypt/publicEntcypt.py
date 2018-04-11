@@ -7,6 +7,7 @@ import base64
 message = "This is a plain text."
 with open('rsa.pub', 'r') as f:
     public_key = f.read()
+    print(public_key.encode(encoding="utf-8"))
     rsa_key_obj = RSA.importKey(public_key)
     cipher_obj = Cipher_PKCS1_v1_5.new(rsa_key_obj)
     cipher_text = base64.b64encode(cipher_obj.encrypt(message))
@@ -15,6 +16,7 @@ with open('rsa.pub', 'r') as f:
 # 数据解密
 with open('rsa.key', 'r') as f:
     private_key = f.read()
+    print(private_key.encode(encoding="utf-8"))
     rsa_key_obj = RSA.importKey(private_key)
     cipher_obj = Cipher_PKCS1_v1_5.new(rsa_key_obj)
     random_generator = Random.new().read

@@ -90,6 +90,7 @@ class Address(models.Model):
 	ID=models.IntegerField(primary_key=True)
 	ClientID=models.IntegerField()
 	Address=models.CharField(max_length=500,null=True)
+	Phone=models.CharField(max_length=11,null=True)
 	Contacts=models.CharField(max_length=500)
 	CreateTime=models.DateTimeField()
 	Remark=models.CharField(max_length=1000,null=True)
@@ -115,4 +116,28 @@ class DrugStore(models.Model):
 	#	super(DrugStore, self).__init__()
 	#	self.arg = arg
 		
+		
+class Medi(models.Model):
+	ID=models.IntegerField(primary_key=True)
+	Code=models.CharField(max_length=100)
+	Name=models.CharField(max_length=100)
+	Spec=models.CharField(max_length=2000)
+	ProducerID=models.IntegerField()
+	GuidePrice=models.DecimalField()
+	DoseUnit=models.CharField(max_length=20)
+	DoseFactor=models.IntegerField()
+	OtpaUnit=models.CharField(max_length=20)
+	OtpaPack=models.IntegerField()
+	InpaUnit=models.CharField(max_length=20)
+	InpaPack=models.IntegerField()
+	HouseUnit=models.CharField(max_length=20)
+	HousePack=models.IntegerField()
+	Instructions=models.BinaryField()
+	CreateTime=models.DateTimeField()
+	ModifyTime=models.DateTimeField()
+	Remark=models.CharField(max_length=1000,null=True)
+	"""docstring for Medi"""
+	#def __init__(self, arg):
+	#	super(Medi, self).__init__()
+	#	self.arg = arg
 		

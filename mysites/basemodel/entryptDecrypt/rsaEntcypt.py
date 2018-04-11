@@ -9,9 +9,9 @@ rsa = RSA.generate(1024, random_generator)
 # 生成私钥并保存
 private_pem = rsa.exportKey()
 with open('rsa.key', 'w') as f:
-    f.write(private_pem)
+    f.write(str(private_pem))
 
 # 生成公钥并保存
 public_pem = rsa.publickey().exportKey()
 with open('rsa.pub', 'w') as f:
-    f.write(public_pem)
+    f.write(str(public_pem))

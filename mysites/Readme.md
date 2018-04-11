@@ -55,6 +55,7 @@ Address(联系地址，发货地址):
 	ClientID
 	Address
 	Contacts(联系人)
+	Phone
 	CreateTime
 	Remark
 
@@ -102,5 +103,16 @@ Medi(药品):
 	Spec
 	ProducerID(厂家)
 	GuidePrice(指导价)
-	Unit(最小单位)
+	DoseUnit(最小单位)
+	DoseFactor(计量系数)
+	OtpaUnit(门诊单位)
+	OtpaPack(门诊包装系数)
+	InpaUnit(住院单位)
+	InpaPack(住院包装系数)
+	HouseUnit(药库单位)
+	HousePack(药库包装系数)
+	Instructions(说明书)
+	CreateTime
+	ModifyTime
+	Remark
 	
