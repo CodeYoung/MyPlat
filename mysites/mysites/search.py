@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+from basemodel.models import Organization
+from django.db.models import Q
+from django.template import Context,loader
+from django.http import HttpResponse
+from django.shortcuts import render,get_object_or_404
  
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -16,7 +21,15 @@ def search(request):
         message = '你搜索的内容为: ' + request.GET['q']
         
     if 'organization' in request.GET:
-    	return organization.organization.search(request.GET['organization'])
+    	#organization_list=get_object_or_404(Organization,Name=request.GET['organization'])
+    	#organization_list=Organization.objects.all()#filter(Name=request.GET['organization'])
+    	#tmpl=loader.get_template('organization/organization_list.html')
+    	#cont=Context({'organizations':organization_list})
+    	#return HttpResponse(tmpl.render({'organizations':organization_list}))
+    	org=organization.organization(request.GET['organization'])
+    	#return org.search('chongfuyi')
+    	return org.search(request.GET['organization'])
+    	#return organization.organization.search(request.GET['organization'])
     	#message = '你搜索的机构为: ' + request.GET['organization']
 
     return HttpResponse(message)

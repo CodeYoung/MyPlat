@@ -13,8 +13,7 @@ class organization(object):
 		self.arg = arg
 
 
-	def search(keywords):
-		organization_list=get_object_or_404(Organization,Name=keywords)#Organization.objects.get(Q(Name=keywords))
+	def search(self,keywords):
+		organization_list=Organization.objects.filter(Name=keywords)
 		tmpl=loader.get_template('organization/organization_list.html')
-		cont=Context({'organizations':organization_list})
-		return HttpResponse(tmpl.render(cont))
+		return HttpResponse(tmpl.render({'organizations':organization_list}))
