@@ -15,11 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from . import view,search
+from . import view,search,add
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello$',view.hello),
     url(r'^searchOrganization$',view.searchOrganization),
     url(r'^search$', search.search),
+    url(r'^addOrganization$',view.addOrganization),
 ]

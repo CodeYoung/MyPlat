@@ -13,3 +13,8 @@ def searchOrganization(request):
 	context['hello'] = 'Hello World!'
 	return render(request, 'organization/organization_search.html', context)
 	
+
+def addOrganization(request):
+	context          = {}
+	context['hello'] = 'Hello World!'
+	return render(request, 'organization/organization_form.html', context)
