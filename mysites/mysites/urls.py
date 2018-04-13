@@ -23,4 +23,7 @@ urlpatterns = [
     url(r'^searchOrganization$',view.searchOrganization),
     url(r'^search$', search.search),
     url(r'^addOrganization$',view.addOrganization),
+    url(r'^index.html$',view.index),
+    url(r'^add$',add.add),
+
 ]
