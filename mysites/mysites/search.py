@@ -15,7 +15,7 @@ def search_form(request):
  
 # 接收请求数据
 def search(request):  
-    print(type(request))
+    
     request.encoding='utf-8'
     message = '你提交了空表单'
     if 'q' in request.GET:
