@@ -43,12 +43,21 @@ def fillUnivlist(html):
 def main():
 	itchat.login()
 	url = 'https://www.hfax-fintech.com/lending.html#/lending/1?rsrc=https%3A%2F%2Fwww.hfax.com%2F%23%2F'#'http://sports.qq.com/articleList/rolls/' #要访问的网址
-	html = getHTMLText(url) #获取HTML
+	
+	#想给谁发信息，先查找到这个朋友,name后填微信备注即可,deepin测试成功
+	users = itchat.search_friends(name='林乖乖')
+	#获取好友全部信息,返回一个列表,列表内是一个字典
+	print(users)
+	#获取`UserName`,用于发送消息
+	userName = users[0]['UserName']
+	#itchat.send("hello",toUserName = userName)
 	while True:
+		html = getHTMLText(url) #获取HTML
 		money=fillUnivlist(html)
 		if(money>0):
 			print(money)
-			itchat.send(str(money),'filehelper')
+			itchat.send('有可投资项目，投资金额为:'+str(money),'filehelper')
+			itchat.send('有可投资项目，投资金额为:'+str(money),toUserName=userName)
 			time.sleep(10)
 
 
