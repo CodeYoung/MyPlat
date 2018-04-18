@@ -20,6 +20,7 @@ def fillUnivlist(html):
 
 
         #tag=soup.find_all('span',attrs=)
+        money_list=[]
         for x in tag:
         	#print(type(x))
         	#print(type(x.get_text()))
@@ -27,8 +28,9 @@ def fillUnivlist(html):
         	strs=((x.get_text())[:-50]).strip().replace(',','')
         	#print(strs)
         	money=float(strs)
-        	if(money>=0):
-        		return money
+        	if(money>=0 and money<500):
+        		money_list.append(money)
+        	#return money
 
         	#print(money)
 
@@ -38,7 +40,7 @@ def fillUnivlist(html):
         		#soupx=BeautifulSoup(x, 'html.parser')
         		#print(soupx.find_all)
         #print(str(tag[0]))
-        return 0
+        return money_list
 
 def main():
 	itchat.login()
@@ -53,12 +55,13 @@ def main():
 	#itchat.send("hello",toUserName = userName)
 	while True:
 		html = getHTMLText(url) #获取HTML
-		money=fillUnivlist(html)
-		if(money>0):
-			print(money)
-			itchat.send('有可投资项目，投资金额为:'+str(money),'filehelper')
-			itchat.send('有可投资项目，投资金额为:'+str(money),toUserName=userName)
-			time.sleep(10)
+		money_list=fillUnivlist(html)
+		for money in money_list:
+			if(money>0 and money<=500):
+				print(money)
+				itchat.send('有可投资项目，投资金额为:'+str(money),'filehelper')
+				itchat.send('有可投资项目，投资金额为:'+str(money),toUserName=userName)
+		time.sleep(60)
 
 
 if __name__ == '__main__':
