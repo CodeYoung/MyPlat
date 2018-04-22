@@ -5,9 +5,38 @@
 5.Doctor可以不通过验证看到已经开的处方，申请单，但是不能看到对应的病人
 6.Doctor和病人及时聊天通讯，并进行对应管理，Doctor对自己病人进行管理，病人对自己的Doctors进行管理，家庭医生概念
 7.采用密码器进行数据加密和验证？
+8.新增病人自己录入功能
+9.医生录入数据时，需要取得病人的同意，通过即时通讯取得同意
+10.客户反馈系统
 
 
 
+
+Record(录入记录):
+	ID
+	ClientID
+	DoctorID
+	IsSelfRecord(是否病人自己录入)
+	CreateTime
+	TreatTime(就诊时间)
+	ModifyTime
+	DeptID
+	OrganizationID
+
+
+
+DAs(记录明细):
+	ID
+	RecordID
+	MediID
+	Count(数量)
+	Unit(单位)
+	Frequency(频率)
+
+ImageRecord(记录对应图片):
+	ID
+	RecordID
+	Image
 
 
 Doctors(医生):
