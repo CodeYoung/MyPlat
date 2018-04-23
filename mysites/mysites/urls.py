@@ -20,9 +20,9 @@ from . import view,search,add,organization
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^hello$',view.hello),
-    url(r'^searchOrganization$',organization.organization.searchOrganization),
+    url(r'^searchOrganization$',organization.searchOrganization),
     url(r'^search$', search.search),
-    url(r'^addOrganization$',organization.organization.addOrganization),
+    url(r'^addOrganization$',organization.addOrganization),
     url(r'^index.html$',view.index),
     url(r'^add$',add.add),
 
