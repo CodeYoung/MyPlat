@@ -17,3 +17,16 @@ class organization(object):
 		organization_list=Organization.objects.filter(Name=keywords)
 		tmpl=loader.get_template('organization/organization_list.html')
 		return HttpResponse(tmpl.render({'organizations':organization_list}))
+
+	#查询机构
+	def searchOrganization(request):
+		context          = {}
+		context['hello'] = 'Hello World!'
+		return render(request, 'organization/organization_search.html', context)
+	
+
+	#新增机构
+	def addOrganization(request):
+		context          = {}
+		context['hello'] = 'Hello World!'
+		return render(request, 'organization/organization_form.html', context)

@@ -5,12 +5,13 @@
 5.Doctor可以不通过验证看到已经开的处方，申请单，但是不能看到对应的病人
 6.Doctor和病人及时聊天通讯，并进行对应管理，Doctor对自己病人进行管理，病人对自己的Doctors进行管理，家庭医生概念
 7.采用密码器进行数据加密和验证？
-8.新增病人自己录入功能
+8.病人录入自己的或者家人就诊信息功能
 9.医生录入数据时，需要取得病人的同意，通过即时通讯取得同意
 10.客户反馈系统
 
 
 
+业务数据：
 
 Record(录入记录):
 	ID
@@ -28,16 +29,22 @@ Record(录入记录):
 DAs(记录明细):
 	ID
 	RecordID
-	MediID
-	Count(数量)
-	Unit(单位)
+	MediID(商品名ID)
+	MediChemID(通用名ID)
+	EachQuantity(每次用量)
+	DoseUnit(计量单位)
+	Quantity(数量)
+	CalcUnit(计算单位)
 	Frequency(频率)
+	Useage(用法)
 
 ImageRecord(记录对应图片):
 	ID
 	RecordID
 	Image
 
+
+基础数据：
 
 Doctors(医生):
 	ID
@@ -127,6 +134,7 @@ DrugStore(药房):
 
 Medi(药品):
 	ID
+	MediChemID(通用名)
 	Code(国药准字)
 	Name
 	Spec
@@ -144,4 +152,21 @@ Medi(药品):
 	CreateTime
 	ModifyTime
 	Remark
-	
+
+
+MediChem(药品化学性质):
+	ID
+	Name(通用名)
+	MediForm(药品剂型)
+
+
+WordData(词汇字典)：
+	ID
+	MainID(字典目录)
+	Name
+	Remark
+
+
+WordMain(字典目录)：
+	ID
+	Name

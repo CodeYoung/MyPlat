@@ -1,6 +1,6 @@
 {% extends "../base_search.html" %}
 
-{% block title %}<title>查询机构</title>
+{% block title %}<title>新增机构</title>
 {% endblock %}
 
 {% block mainbody %}
@@ -46,13 +46,45 @@
 	<div class="row">
 	
 <div class="col left-column">
+<center>
 <form action="/add" method="get">
-	<label for="organization">机构编码:</label>
-	<input type="text" name="organizationcode" id='organization'>
-	<input type="text" name="name">
-	<input type="text" name="phone">
-	<input type="text" name="address">
-	<input type="text" name="remark">
-	<input type="submit" value="确定">
+	<table cellspacing="0" cellpadding="0" border="0">
+   <tr>
+    <td>机构编码:</td>
+    <td><input type="text" name="organizationcode"/></td>
+   </tr>
+   <tr>
+    <td>机构名称:</td>
+    <td><input type="text" name="name"/></td>
+   </tr>
+   <tr>
+    <td>手机号:</td>
+    <td><input type="text" name="phone"/></td>
+   </tr>
+   <tr>
+    <td>机构地址:</td>
+    <td><input type="text" name="address"/></td>
+   </tr>
+   <tr>
+    <td>备注:</td>
+    <td><input type="text" name="remark"/></td>
+   </tr>
+   <tr>
+    <td colspan="1" align="center">
+    <input type="submit" value="确定"></td>
+   </tr>
+</table>
+	<!--<label for="organization">机构编码:</label>
+	<input type="text" name="organizationcode" id='organization'></br>
+	<label for="name">机构名称:</label>
+	<input type="text" name="name" id='name'></br>
+	<label for="phone">手机号:</label>
+	<input type="text" name="phone" id='phone'></br>
+	<label for="address">机构地址:</label>
+	<input type="text" name="address" id='address'></br>
+	<label for="remark">备注:</label>
+	<input type="text" name="remark" id='remark'></br>
+	<input type="submit" value="确定">-->
 </form>
+</center>
 {% endblock %}

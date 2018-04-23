@@ -5,15 +5,15 @@ import re
 from selenium import webdriver
 import time
 import itchat
-import os
-import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+#import os
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf-8')
 
 
 def getHTMLText(url):
-        driver = webdriver.PhantomJS(executable_path='/Users/linwy/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs')  # phantomjs的绝对路径
-        #driver = webdriver.PhantomJS(executable_path='C:\\Users\\Administrator\\Downloads\\phantomjs-2.1.1-windows\\phantomjs-2.1.1-windows\\bin\\phantomjs')  # phantomjs的绝对路径
+        #driver = webdriver.PhantomJS(executable_path='/Users/linwy/Downloads/phantomjs-2.1.1-macosx/bin/phantomjs')  # phantomjs的绝对路径
+        driver = webdriver.PhantomJS(executable_path='C:\\Users\\Administrator\\Downloads\\phantomjs-2.1.1-windows\\phantomjs-2.1.1-windows\\bin\\phantomjs')  # phantomjs的绝对路径
         time.sleep(2)
         driver.get(url)  # 获取网页
         time.sleep(2)
@@ -62,9 +62,10 @@ def main():
 	
 	#itchat.send("hello",toUserName = userName)
     while True:
-        html = getHTMLText(url) #获取HTML
-        money_list=fillUnivlist(html)
-        for money in money_list:
+    	time.sleep(30)
+    	html = getHTMLText(url) #获取HTML
+    	money_list=fillUnivlist(html)
+    	for money in money_list:
             if(money>0 and money<100):
                 itchat.send('有可投资项目，投资金额为:'+str(money),'filehelper')
                 print(money)
@@ -74,10 +75,8 @@ def main():
                     user=users[i]
                     #print(money)
                     itchat.send('有可投资项目，投资金额为:'+str(money),toUserName=user['UserName'])
-                
                 #itchat.send('有可投资项目，投资金额为:'+str(money),toUserName='@edb9a1759d7564f5566ef199b4156cd5ce733f77f281b6af6d56e8dd45a5a986')
-
-		time.sleep(30)
+    	
 
 
 if __name__ == '__main__':
