@@ -7,7 +7,7 @@ from django.shortcuts import render,get_object_or_404
  
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from . import organization
+from basemodel import organization
  
 # 表单
 def search_form(request):
