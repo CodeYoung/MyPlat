@@ -2,8 +2,10 @@
 from basemodel.models import Organization
 from django.db.models import Q
 from django.template import Context,loader
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from django.shortcuts import render,get_object_or_404
+import json
+from django.core import serializers
 #from django.http import Http404
 
 #查询机构
@@ -28,6 +30,9 @@ class organization(object):
 
 	def search(self,keywords):
 		organization_list=Organization.objects.filter(Name=keywords)
-		tmpl=loader.get_template('organization/organization_list.html')
-		return HttpResponse(tmpl.render({'organizations':organization_list}))
+		#json_serializer = serializers.get_serializer("json")()
+		#json_serializer.serialize(queryset, ensure_ascii=False, stream=response)
+		return HttpResponse(serializers.serialize('json',organization_list,ensure_ascii=False))
+		#tmpl=loader.get_template('organization/organization_list.html')
+		#return HttpResponse(tmpl.render({'organizations':organization_list}))
 
