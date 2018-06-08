@@ -15,4 +15,8 @@ def index(request):
 	return render(request, 'index.html', context)
 
 
+def test(request):
+	context          = {}
+	context['hello'] = 'Hello World!'
+	return render(request, 'test.html', context)
 

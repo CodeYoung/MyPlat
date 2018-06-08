@@ -24,8 +24,10 @@ urlpatterns = [
     url(r'^search$', search.search),
     #url(r'^addOrganization$',organization.addOrganization),
     url(r'^index.html$',view.index),
+    url(r'^test.html',view.test),
     url(r'^add$',add.add),
     url(r'^base/', include('basemodel.urls')),
+    url(r'^$',view.index),
 
 
     #url(r'^head.jpg',include('static.img.head.jpg')),
