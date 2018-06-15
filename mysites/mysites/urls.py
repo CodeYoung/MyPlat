@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 from . import view,search,add
+from basemodel import views as basemodel
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -27,8 +28,9 @@ urlpatterns = [
     url(r'^test.html',view.test),
     url(r'^add$',add.add),
     url(r'^base/', include('basemodel.urls')),
-    url(r'^$',view.index),
-
+    url(r'^$',basemodel.index),
+    url(r'^accounts/',include('users.urls')),
+    url(r'^accounts/profile/',basemodel.accounts_profile),
 
     #url(r'^head.jpg',include('static.img.head.jpg')),
 

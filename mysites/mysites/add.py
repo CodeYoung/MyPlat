@@ -25,3 +25,9 @@ def add(request):
 		org=Organization(ID=orgid.ID+1,Code=request.GET['organizationcode'],Name=request.GET['name'],Phone=request.GET['phone'],Address=request.GET['address'],CreateTime=time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),Remark=request.GET['remark'])
 		org.save()
 		return HttpResponse(message)
+
+	if 'usernamesignup' in request.GET:
+		clientid=Clients.objects.latest('ID')
+		client=Clients(ID=clientid+1,Name=request.GET['usernamesignup'],Email=request.GET['emailsignup'],PassWord=request.GET['passwordsignup'])
+		client.save()
+		return HttpResponse(message)

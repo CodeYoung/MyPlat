@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'zhj1bt881x66rze-ub+00p8hlg-e3kldjzd4y37t4c2(&f%i-w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost','127.0.0.1','*',]
 
@@ -38,7 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'basemodel',
+    'users',
+    'blogs',
 ]
+
+AUTH_USER_MODEL='users.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
