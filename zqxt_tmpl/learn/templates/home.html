@@ -1,0 +1,18 @@
+{% for item in List %}
+	{{item}}{% if not forloop.last %},{% endif %}
+{% endfor %}
+
+{% url 'add' 4 5 as add%}
+
+<a href="{{ add }}">链接到：{{ add }}</a>
+
+
+
+{% if request.user.is_authenticated %}
+	{{ request.user.username }},您好！
+{% else %}
+	请登录，这里放登录链接
+{% endif %}
+
+
+<a href="{{ request.path }}?{{request.GET.urlencode }}&delete=1">当前网址加参数</a>

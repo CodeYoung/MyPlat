@@ -1,0 +1,6 @@
+# Netscape HTTP Cookie File
+# http://curl.haxx.se/rfc/cookie_spec.html
+# This is a generated file!  Do not edit.
+
+www.hfax.com	FALSE	/	FALSE		acw_tc	AQAAANw23Q/62gIABHC23q9p2SX9jldP
+www.hfax.com	FALSE	/	FALSE		aliyungf_tc	AQAAADgVJypPpQIABHC23s2/bWfB7gr0
