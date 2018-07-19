@@ -9,7 +9,7 @@ class BaseObject(models.Model):
 	#def __init__(self, arg):
 	#	super(BaseObject, self).__init__()
 	#	self.arg = arg
-	ID=models.IntegerField(primary_key=True)
+	#ID=models.IntegerField(primary_key=True)
 	Code=models.CharField(max_length=20)
 	Name=models.CharField(max_length=20)
 	CreateTime=models.DateTimeField()

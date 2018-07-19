@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'basemodel',
     'users',
     'blogs',
+    'crmapp'
 ]
 
 AUTH_USER_MODEL='users.User'
