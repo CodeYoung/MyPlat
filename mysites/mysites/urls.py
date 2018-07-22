@@ -17,6 +17,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 from . import view,search,add
 from basemodel import views as basemodel
+from users import views as users_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +30,7 @@ urlpatterns = [
     url(r'^add$',add.add),
     url(r'^base/', include('basemodel.urls')),
     url(r'^$',basemodel.index),
+    #url(r'^$',users_views.index),
     url(r'^accounts/',include('users.urls')),
     url(r'^accounts/profile/',basemodel.accounts_profile),
     url(r'^email$',view.sendemail),

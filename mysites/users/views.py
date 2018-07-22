@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login
 from django.urls import reverse
-from django.shortcuts import redirect, resolve_url
+from django.shortcuts import redirect, resolve_url,render
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import never_cache
@@ -23,6 +23,8 @@ if settings.USERS_SPAM_PROTECTION:  # pragma: no cover
 else:
     from .forms import RegistrationForm
 
+def index(request):
+    return render(request,'base.html')
 
 @csrf_protect
 @never_cache

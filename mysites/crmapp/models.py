@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 # Create your models here.
 
@@ -19,12 +20,12 @@ class BaseObject(models.Model):
 		abstract = True
 
 #用户
-class User(BaseObject):
+#class User(BaseObject):
 	"""docstring for User"""
 	#def __init__(self, arg):
 	#	super(User, self).__init__()
 	#	self.arg = arg
-	PassWord=models.CharField(max_length=20,default='123')
+#	PassWord=models.CharField(max_length=20,default='123')
 
 #联系人，针对于客户在联系人
 class Contacts(BaseObject):
