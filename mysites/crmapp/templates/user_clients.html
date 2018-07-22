@@ -12,11 +12,18 @@
 			{% include "users/partials/field.html" %}
 		{% endfor %}
 
-		{% for client in clients}
+		{% for client in clients %}
 			{client.CompanyName}
-		{% endfor%}
+		{% endfor %}
 		
 		<br>
+
+		<div class="button-wrapper submit">
+			
+			<input class="btn btn-primary" type="submit" value="{% trans 'AddClient' %}">
+
+		</div>
+
 		<div class="button-wrapper submit">
 			<input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
 		</div>

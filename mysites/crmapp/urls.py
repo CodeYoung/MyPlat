@@ -1,8 +1,9 @@
 from django.conf.urls import url
 
-from .views import (activate, activation_complete, register,
-                    registration_closed, registration_complete)
+from .views import (getuserclients, adduserclient)
 
 urlpatterns = [
     url(r'^$', getuserclients, name='user_clients'),
+    url(r'/addclient^$',adduserclient,name='user_addclient'),
+
     ]

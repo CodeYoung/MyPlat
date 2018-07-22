@@ -6,6 +6,10 @@ from django.views.decorators.csrf import csrf_protect
 from crmapp.models import Client
 # Create your views here.
 
+def index(request):
+	return render(request,'user_clients.html')
+	#return redirect('user_clients')
+
 @csrf_protect
 @never_cache
 def getuserclients(request):	

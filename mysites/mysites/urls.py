@@ -18,6 +18,7 @@ from django.contrib import admin
 from . import view,search,add
 from basemodel import views as basemodel
 from users import views as users_views
+from crmapp import views as crmapp_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,12 +30,13 @@ urlpatterns = [
     url(r'^test.html',view.test),
     url(r'^add$',add.add),
     url(r'^base/', include('basemodel.urls')),
-    url(r'^$',basemodel.index),
+    #url(r'^$',basemodel.index),
     #url(r'^$',users_views.index),
+    url(r'^$',crmapp_views.index),
     url(r'^accounts/',include('users.urls')),
     url(r'^accounts/profile/',basemodel.accounts_profile),
     url(r'^email$',view.sendemail),
-
+    url(r'^$', crmapp_views.getuserclients, name='user_clients'),
     #url(r'^head.jpg',include('static.img.head.jpg')),
 
 
