@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="form-wrapper">
-	<form method="post" action="/crmapp/addclient">
+	<form method="post" action="/crmapp/userclient">
 		{% if form.errors %}
 			{% include "user_clients/partials/errors.html" %}
 		{% endif %}
@@ -11,10 +11,18 @@
 		{% for field in form %}
 			{% include "user_clients/partials/field.html" %}
 		{% endfor %}
+
+		{% for client in clients %}
+			{client.CompanyName}
+		{% endfor %}
+		
+		<br>
+
 		<div class="button-wrapper submit">
-			<br>
-			<input type="submit" value="{% trans '保存' %}" />
-		</div>
+			
+			<input class="btn btn-primary" type="submit" value="{% trans 'AddClient' %}">
+
+		</div>	
 	</form>
 </div>
 {% endblock %}

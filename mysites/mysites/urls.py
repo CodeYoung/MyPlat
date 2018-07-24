@@ -33,10 +33,11 @@ urlpatterns = [
     #url(r'^$',basemodel.index),
     #url(r'^$',users_views.index),
     url(r'^$',crmapp_views.index),
+    url(r'^crmapp/',include('crmapp.urls')),
     url(r'^accounts/',include('users.urls')),
     url(r'^accounts/profile/',basemodel.accounts_profile),
     url(r'^email$',view.sendemail),
-    url(r'^$', crmapp_views.getuserclients, name='user_clients'),
+    #url(r'^$', crmapp_views.getuserclients, name='user_clients'),
     #url(r'^head.jpg',include('static.img.head.jpg')),
 
 

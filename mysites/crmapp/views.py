@@ -1,25 +1,43 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
+from django.http import HttpResponseRedirect
 
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
 from crmapp.models import Client
+
+from .forms import *
 # Create your views here.
 
 def index(request):
-	return render(request,'user_clients.html')
+	if request.user.is_authenticated:
+		#print('user is authenticated')
+		return getuserclients(request)#render(request,'user_clients/user_clients.html')#redirect(reverse('user_clients'))
+	return render(request,'base_crm.html')
 	#return redirect('user_clients')
 
 @csrf_protect
 @never_cache
 def getuserclients(request):	
-	clients=Client.objects.filter(Owner=request.user)
-	return render(request,'user_clients',{'clients':clients})
+	if request.user.is_authenticated:
+		clients=Client.objects.filter(Owner=request.user)
+		print('user is authenticated')
+		print(clients)
+		return render(request,'user_clients/user_clients.html',{'clients':clients})
+	else:
+		return render(request,'base_crm.html')
 
 
 def adduserclient(request):
-	client=Client()
-	client.Owner=request.user
-	client.CompanyName='我们公司'
-	client.save()
-	return redirect('user_clients')
+	if request.method=="POST":
+		form=ClientForm(request.POST)
+		if form.is_valid():
+			
+			return HttpResponseRedirect('/')
+	else:
+		form=ClientForm()
+		return render(request,'user_clients/client_form.html',{'form':form})
+
+def userclient(request):
+	form=ClientForm()
+	return render(request,'user_clients/client_form.html',{'form':form})

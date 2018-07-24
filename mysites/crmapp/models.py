@@ -66,25 +66,25 @@ class Client(BaseObject):
 	#def __init__(self, arg):
 	#	super(Client, self).__init__()
 	#	self.arg = arg
-	CompanyName=models.CharField(max_length=50)
+	CompanyName=models.CharField(max_length=50,verbose_name='所属公司')
 	#所属销售
-	Owner=models.ForeignKey(User, related_name = 'Clients',on_delete=models.CASCADE)
+	Owner=models.ForeignKey(User, related_name = 'Clients',on_delete=models.CASCADE,verbose_name='所属销售')
 	#所属行业
-	Industry=models.CharField(max_length=100)
+	Industry=models.CharField(max_length=100,verbose_name='所属行业')
 	#意向产品
-	IntentionalProducts=models.CharField(max_length=100)
+	IntentionalProducts=models.CharField(max_length=100,verbose_name='意向产品')
 	#购买点数
-	PurchasePoint=models.IntegerField()
+	PurchasePoint=models.IntegerField(verbose_name='购买点数')
 	#跟进记录
-	FollowRecord=models.CharField(max_length=1000)
+	FollowRecord=models.CharField(max_length=1000,verbose_name='跟进记录')
 	#关联客户
-	Clients=models.ForeignKey('self',related_name='RelationClients',on_delete=models.CASCADE)
+	Clients=models.ForeignKey('self',related_name='RelationClients',on_delete=models.CASCADE,verbose_name='关联客户')
 	#项目进程
-	ProjectProcess=models.CharField(max_length=100)
+	ProjectProcess=models.CharField(max_length=100,verbose_name='项目进程')
 	#联系人--在新增客户时可以新增多个联系人
-	Contacts=models.ForeignKey(Contacts,related_name='ClientContacts',on_delete=models.CASCADE)
+	Contacts=models.ForeignKey(Contacts,related_name='ClientContacts',on_delete=models.CASCADE,verbose_name='联系人')
 	#地址
-	Address=models.CharField(max_length=1000)
+	Address=models.CharField(max_length=1000,verbose_name='地址')
 
 
 		
