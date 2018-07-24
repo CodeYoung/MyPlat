@@ -11,7 +11,7 @@ class ClientForm(forms.ModelForm):
 	#	self.arg = arg
 	#CompanyName=forms.CharField(label='所属公司：')
 	#Owner=forms.ChoiceField(choices=User,label='所有者：')
-	ProjectProcess=forms.CharField(label='项目进程',widget=forms.Textarea)
+	ProjectProcess=forms.CharField(label='项目进程',widget=forms.Textarea,required=False)
 	class Meta:
 		"""docstring for Meta"""
 		model=Client

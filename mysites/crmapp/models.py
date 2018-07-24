@@ -10,8 +10,8 @@ class BaseObject(models.Model):
 	#	super(BaseObject, self).__init__()
 	#	self.arg = arg
 	#ID=models.IntegerField(default=1)
-	Code=models.CharField(max_length=10,default='default code')
-	Name=models.CharField(max_length=10,default='default name')
+	Code=models.CharField(max_length=50,default='default code')
+	Name=models.CharField(max_length=50,default='default name')
 	CreateTime=models.DateTimeField(u'新建时间',auto_now_add=True,editable=True)	
 	ModifyTime=models.DateTimeField(u'修改时间',auto_now_add=True,editable=True)
 	Remark=models.CharField(max_length=1000)
@@ -70,21 +70,21 @@ class Client(BaseObject):
 	#所属销售
 	Owner=models.ForeignKey(User, related_name = 'Clients',on_delete=models.CASCADE,verbose_name='所属销售')
 	#所属行业
-	Industry=models.CharField(max_length=100,verbose_name='所属行业')
+	Industry=models.CharField(max_length=100,verbose_name='所属行业',null=True,blank=True)
 	#意向产品
-	IntentionalProducts=models.CharField(max_length=100,verbose_name='意向产品')
+	IntentionalProducts=models.CharField(max_length=100,verbose_name='意向产品',null=True,blank=True)
 	#购买点数
-	PurchasePoint=models.IntegerField(verbose_name='购买点数')
+	PurchasePoint=models.IntegerField(verbose_name='购买点数',null=True,blank=True)
 	#跟进记录
-	FollowRecord=models.CharField(max_length=1000,verbose_name='跟进记录')
+	FollowRecord=models.CharField(max_length=1000,verbose_name='跟进记录',null=True,blank=True)
 	#关联客户
-	Clients=models.ForeignKey('self',related_name='RelationClients',on_delete=models.CASCADE,verbose_name='关联客户')
+	Clients=models.ForeignKey('self',related_name='RelationClients',on_delete=models.CASCADE,verbose_name='关联客户',null=True,blank=True)
 	#项目进程
-	ProjectProcess=models.CharField(max_length=100,verbose_name='项目进程')
+	ProjectProcess=models.CharField(max_length=100,verbose_name='项目进程',null=True,blank=True)
 	#联系人--在新增客户时可以新增多个联系人
-	Contacts=models.ForeignKey(Contacts,related_name='ClientContacts',on_delete=models.CASCADE,verbose_name='联系人')
+	Contacts=models.ForeignKey(Contacts,related_name='ClientContacts',on_delete=models.CASCADE,verbose_name='联系人',null=True,blank=True)
 	#地址
-	Address=models.CharField(max_length=1000,verbose_name='地址')
+	Address=models.CharField(max_length=1000,verbose_name='地址',null=True,blank=True)
 
 
 		
