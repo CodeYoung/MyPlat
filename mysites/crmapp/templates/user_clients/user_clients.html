@@ -11,10 +11,22 @@
 		{% for field in form %}
 			{% include "user_clients/partials/field.html" %}
 		{% endfor %}
-
-		{% for client in clients %}
-			{{client.CompanyName}}
-		{% endfor %}
+		<table border="1">
+			<tr>
+				<th>序号</th>
+				<th>公司名称</th>
+				<th>所属销售</th>
+			</tr>
+			{% for client in clients %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ client.CompanyName }}</td>
+					<td>{{ client.Owner }}</td>
+				</tr>
+				
+			{% endfor %}
+		</table>
+		
 		
 		<br>
 
