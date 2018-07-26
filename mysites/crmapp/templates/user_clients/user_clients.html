@@ -1,6 +1,13 @@
 {% extends "base_crm.html" %}
 {% load i18n %}
-
+{% block scriptstyle %}
+<style type="text/css">
+	table{margin: 10px auto;width: 500px;border-collapse: collapse;}
+	table tr td th{border: 1px solid #e7e7e7; height: 25px;}
+	.title{text-align: center;font-weight: bolder;}
+	table tr:hover{background-color: #dafdf3;}
+</style>>
+{% endblock %}
 {% block content %}
 <div class="form-wrapper">
 	<form method="post" action="/crmapp/userclient">
@@ -11,17 +18,25 @@
 		{% for field in form %}
 			{% include "user_clients/partials/field.html" %}
 		{% endfor %}
-		<table border="1">
+		<table id="tableClient" border="1" width="100%" border="2" cellspacing="0" cellpadding="0">
 			<tr>
 				<th>序号</th>
 				<th>公司名称</th>
 				<th>所属销售</th>
+				<th>所属行业</th>
+				<th>意向产品</th>
+				<th>联系人</th>
+				<th>联系地址</th>
 			</tr>
 			{% for client in clients %}
 				<tr>
 					<td>{{ forloop.counter }}</td>
 					<td>{{ client.CompanyName }}</td>
 					<td>{{ client.Owner }}</td>
+					<td>{{ client.Industry }}</td>
+					<td>{{ client.IntentionalProducts }}</td>
+					<td>{{ client.Contacts }}</td>
+					<td>{{ client.Address }}</td>
 				</tr>
 				
 			{% endfor %}
@@ -34,7 +49,31 @@
 			
 			<input class="btn btn-primary" type="submit" value="{% trans 'AddClient' %}">
 
+			<input class="btn btn-primary" type="submit" value="{% trans 'EditClient' %}">
 		</div>	
 	</form>
 </div>
 {% endblock %}
+
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+var trs = document.getElementById('tableClient').getElementsByTagName('tr');
+   window.onload = function(){
+    for( var i=0; i<trs.length; i++ ){
+     trs[i].onmousedown = function(){
+      tronmousedown(this);
+     }
+    }
+   }
+   function tronmousedown(obj){
+    for( var o=0; o<trs.length; o++ ){
+     if( trs[o] == obj ){
+      trs[o].style.backgroundColor = '#DFEBF2';
+     }
+     else{
+      trs[o].style.backgroundColor = '';
+     }
+    }
+   }
+     //-->
+</SCRIPT>
