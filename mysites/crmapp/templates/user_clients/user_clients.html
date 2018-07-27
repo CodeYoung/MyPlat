@@ -1,16 +1,178 @@
 {% extends "base_crm.html" %}
 {% load i18n %}
 {% block scriptstyle %}
+<!-- 引入bootstrap-table样式 -->
+<link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+<!-- bootstrap-table.min.js -->
+<script src="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <style type="text/css">
 	table{margin: 10px auto;width: 500px;border-collapse: collapse;}
 	table tr td th{border: 1px solid #e7e7e7; height: 25px;}
 	.title{text-align: center;font-weight: bolder;}
 	table tr:hover{background-color: #dafdf3;}
+
+	.d1{
+	width:200px;
+	height:200px;
+	text-align:center;
+	line-height:40px;
+	margin:0 auto;
+	}
 </style>>
+<SCRIPT LANGUAGE="JavaScript">
+<!--
+//var trs = document.getElementById('client_list').getElementsByTagName('tr');
+$(document).ready(function () {
+    $('#queryOrderBtn').click(function () {
+        console.log("start");
+            createOrderTable();
+        
+    })
+});
+   window.onload = function(){
+   	console.log("start");
+   	createClientTable();
+    /*for( var i=0; i<trs.length; i++ ){
+     trs[i].onmousedown = function(){
+      tronmousedown(this);
+     }
+    }
+   }
+   function tronmousedown(obj){
+    for( var o=0; o<trs.length; o++ ){
+     if( trs[o] == obj ){
+      trs[o].style.backgroundColor = '#DFEBF2';
+     }
+     else{
+      trs[o].style.backgroundColor = '';
+     }
+    }*/
+   }
+
+
+   function createClientTable(params){
+   	$('#client_list').bootstrapTable('destroy');
+   	$('#client_list').bootstrapTable({
+   		url:'/crmapp/userclientdata',
+   		method:'post',
+   		contentType:"application/x-www-form-urlencoded; charset=UTF-8", // 默认是：'application/json'， 不改的话，后台获取不到数据！ ###### 非常重要！！######
+   		queryParams: '',   //查询参数
+        cache: false,   //是否启用 数据缓存
+        pagination: true,  //是都分页
+        sidePageination: 'client',   //谁来分页，客户端：'client'，服务端：'server'
+        pageNumber: 1,   //默认显示 首页
+            pageSize: 20,     //每页需要显示的数据量
+        pageList: [10, 25, 50],  //可供选择的，每页需要显示的数据量
+        height: 420,       //表格高度
+        uniqueId: 'gameorderid',
+        silent: true,    // 刷新服务器数据
+        showExport: true,
+        exportDataType: 'all',
+        columns:[{
+ 						//field: 'Number',//可不加
+ 						title: '序号',//标题  可不加
+ 						formatter: function (value, row, index) {
+ 							return index+1;
+ 						}
+ 	                },{
+        	field:'id',
+        	title:'ID',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center',
+        	visible:false
+        },{
+        	field:'CompanyName',
+        	title:'所属公司',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'Owner',
+        	title:'所属销售',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'Industry',
+        	title:'所属行业',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'IntentionalProducts',
+        	title:'意向产品',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'PurchasePoint',
+        	title:'购买点数',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'FollowRecord',
+        	title:'跟进记录',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'Clients',
+        	title:'关联客户',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'ProjectProcess',
+        	title:'项目进程',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'Contacts',
+        	title:'联系人',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{
+        	field:'Address',
+        	title:'联系地址',
+        	valign:'middle',
+        	align:'left',
+        	halign:'center'
+        },{field:"action",title:"操作",align:"center",formatter:function(value,row,index){
+                    var strHtml ='<a href="/crmapp/editclient/'+ row.id +'/"><li class="glyphicon glyphicon-pencil"></li></a>'+
+                        '<a href="javascript:void(0);" onclick="removeData('+ index +')" style="margin-left:5px;"><li class="glyphicon glyphicon-remove"></li></a>';
+                    return strHtml;
+                },edit:false}],
+
+        responseHandler:function(res){
+        	console.log(res);
+        	if(res==0){
+        		alert('无客户');
+        	}else{
+        		var clientListData=res['rows'];//##### 重要！！#####
+        		return clientListData;
+        	}
+        },
+        onLoadError:function(status){
+        	console.log(status);
+        	$('#client_list').bootstrapTable('removeAll');
+        }
+   	})
+
+
+     //-->
+   }
+</SCRIPT>
+
 {% endblock %}
 {% block content %}
-<div class="form-wrapper">
-	<form method="post" action="/crmapp/userclient">
+
+<div  class="form-wrapper">
+	
+	<form method="post" >
 		{% if form.errors %}
 			{% include "user_clients/partials/errors.html" %}
 		{% endif %}
@@ -18,7 +180,10 @@
 		{% for field in form %}
 			{% include "user_clients/partials/field.html" %}
 		{% endfor %}
-		<table id="tableClient" border="1" width="100%" border="2" cellspacing="0" cellpadding="0">
+		<div id="queryResult" class="well" style="width: 91%;">
+			<table id="client_list"></table>
+		</div>
+		<!--<table id="tableClient" border="1" width="100%" border="2" cellspacing="0" cellpadding="0">
 			<tr>
 				<th>序号</th>
 				<th>公司名称</th>
@@ -40,7 +205,7 @@
 				</tr>
 				
 			{% endfor %}
-		</table>
+		</table>-->
 		
 		
 		<br>
@@ -49,31 +214,10 @@
 			
 			<input class="btn btn-primary" type="submit" value="{% trans 'AddClient' %}">
 
-			<input class="btn btn-primary" type="submit" value="{% trans 'EditClient' %}">
+			<input id="queryOrderBtn" class="btn btn-primary" type="submit" value="{% trans 'EditClient' %}">
 		</div>	
 	</form>
 </div>
 {% endblock %}
 
-<SCRIPT LANGUAGE="JavaScript">
-<!--
-var trs = document.getElementById('tableClient').getElementsByTagName('tr');
-   window.onload = function(){
-    for( var i=0; i<trs.length; i++ ){
-     trs[i].onmousedown = function(){
-      tronmousedown(this);
-     }
-    }
-   }
-   function tronmousedown(obj){
-    for( var o=0; o<trs.length; o++ ){
-     if( trs[o] == obj ){
-      trs[o].style.backgroundColor = '#DFEBF2';
-     }
-     else{
-      trs[o].style.backgroundColor = '';
-     }
-    }
-   }
-     //-->
-</SCRIPT>
+

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,reverse
-from django.http import HttpResponseRedirect
-
+from django.http import HttpResponseRedirect,HttpResponse
+import json
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
@@ -55,3 +55,56 @@ def adduserclient(request):
 def userclient(request):
 	form=ClientForm()
 	return render(request,'user_clients/client_form.html',{'form':form})
+
+def searchUserClients(request):
+	#if request.POST:
+	clients=Client.objects.filter(Owner=request.user)
+	returnData={"rows":[]} #########非常重要############
+	for client in clients:
+		print(client.CompanyName)
+		if client.Owner is None:
+			owner=""
+		else:
+			owner=client.Owner.Name
+		if client.Clients is None:
+			clientName=""
+		else:
+			clientName=client.Clients.CompanyName
+		if client.Contacts is None:
+			contacts=""
+		else:
+			contacts=client.Contacts.Name
+		returnData['rows'].append({
+			"id":client.id,
+			"CompanyName":client.CompanyName,
+			"Owner":owner,
+			"Industry":client.Industry,
+			"IntentionalProducts":client.IntentionalProducts,
+			"PurchasePoint":client.PurchasePoint,
+			"FollowRecord":client.FollowRecord,
+			"Clients":clientName,
+			"ProjectProcess":client.ProjectProcess,
+			"Contacts":contacts,
+			"Address":client.Address,
+				})	
+	#最后用dumps包装下
+	return HttpResponse(json.dumps(returnData))#render(request,'user_clients/user_clients.html',{'clients':clients})
+
+def editclient(request,client_id):
+	client=Client.objects.get(pk=client_id)
+	if request.method=='POST':
+		print("POST")
+		form=ClientForm(request.POST,isinstance=client)
+		if form.is_valid():
+			form.save()
+			baseUrl="/".join(request.path.split("/")[:-2])
+			print(baseUrl)
+			return redirect(baseUrl)
+	else:
+		print("get")
+		form=ClientForm(instance=client)
+	render(request,'user_clients/client_form.html',{'form':form})
+	
+	#form=ClientForm()
+	#return render(request,'user_clients/client_form.html',{'form':form})
+	
