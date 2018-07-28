@@ -86,5 +86,8 @@ class Client(BaseObject):
 	#地址
 	Address=models.CharField(max_length=1000,verbose_name='地址',null=True,blank=True)
 
+	def __str__(self):
+		return self.CompanyName
+
 
 		

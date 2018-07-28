@@ -38,6 +38,8 @@ urlpatterns = [
     #url(r'^accounts/profile/',basemodel.accounts_profile),
     url(r'^accounts/profile/',crmapp_views.index),
     url(r'^email$',view.sendemail),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        users_views.activate, name='users_activate'),
     #url(r'^$', crmapp_views.getuserclients, name='user_clients'),
     #url(r'^head.jpg',include('static.img.head.jpg')),
 

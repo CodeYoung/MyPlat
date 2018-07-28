@@ -31,6 +31,7 @@ def getuserclients(request):
 def adduserclient(request):
 	if request.method=="POST":
 		form=ClientForm(request.POST)
+		print(request.POST)
 		client=Client()
 		#companyname=client._meta.get_field('CompanyName')
 		#print(type(companyname))
@@ -94,7 +95,8 @@ def editclient(request,client_id):
 	client=Client.objects.get(pk=client_id)
 	if request.method=='POST':
 		print("POST")
-		form=ClientForm(request.POST,isinstance=client)
+		form=ClientForm(request.POST,instance=client)
+		print(form)
 		if form.is_valid():
 			form.save()
 			baseUrl="/".join(request.path.split("/")[:-2])
@@ -103,7 +105,8 @@ def editclient(request,client_id):
 	else:
 		print("get")
 		form=ClientForm(instance=client)
-	render(request,'user_clients/client_form.html',{'form':form})
+		print(form)
+	return render(request,'user_clients/client_editform.html',{'form':form})
 	
 	#form=ClientForm()
 	#return render(request,'user_clients/client_form.html',{'form':form})
