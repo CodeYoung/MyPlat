@@ -143,7 +143,7 @@ $(document).ready(function () {
         	halign:'center'
         },{field:"action",title:"操作",align:"center",formatter:function(value,row,index){
                     var strHtml ='<a href="/crmapp/editclient/'+ row.id +'/"><li class="glyphicon glyphicon-pencil"></li></a>'+
-                        '<a href="javascript:void(0);" onclick="removeData('+ index +')" style="margin-left:5px;"><li class="glyphicon glyphicon-remove"></li></a>';
+                        '<a href="/crmapp/deleteclient/'+ row.id +'/" style="margin-left:5px;"><li class="glyphicon glyphicon-remove"></li></a>';
                     return strHtml;
                 },edit:false}],
 

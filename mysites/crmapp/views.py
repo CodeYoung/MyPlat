@@ -99,15 +99,22 @@ def editclient(request,client_id):
 		print(form)
 		if form.is_valid():
 			form.save()
-			baseUrl="/".join(request.path.split("/")[:-2])
+			baseUrl="/"#"/".join(request.path.split("/")[:-2])
 			print(baseUrl)
 			return redirect(baseUrl)
 	else:
-		print("get")
+		#print("get")
 		form=ClientForm(instance=client)
-		print(form)
+		#print(form)
 	return render(request,'user_clients/client_editform.html',{'form':form})
 	
 	#form=ClientForm()
 	#return render(request,'user_clients/client_form.html',{'form':form})
+
+def deleteclient(request,client_id):
+	print(client_id)
+	client=Client.objects.filter(pk=client_id).delete() #删除数据
+	baseUrl="/"#"/".join(request.path.split("/")[:-2])
+	print(baseUrl)
+	return redirect(baseUrl)
 	
