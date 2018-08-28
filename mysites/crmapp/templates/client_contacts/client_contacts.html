@@ -19,15 +19,22 @@
 	line-height:40px;
 	margin:0 auto;
 	}
+  #btnBack{
+    width: 100px;
+    height: 35px;
+    text-align: center;
+    margin-left: 30px;
+  }
 </style>
 <SCRIPT LANGUAGE="JavaScript">
 <!--
 //var trs = document.getElementById('client_list').getElementsByTagName('tr');
-$(document).ready(function () {
+
     
    window.onload = function(){
    	console.log("start");
    	createClientTable();
+    //managerContacts();
     /*for( var i=0; i<trs.length; i++ ){
      trs[i].onmousedown = function(){
       tronmousedown(this);
@@ -44,15 +51,42 @@ $(document).ready(function () {
      }
     }*/
    }
-
-
+        function getParams(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        };
+    function managerContacts(){
+        //console.log(getParams("clientId"));
+        //document.getElementById("contact_form").action="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
+         //console.log(document.getElementById("contact_form").action);
+        //document.getElementById("contact_form").submit();
+    //var Code = document.getElementsByName('Code');
+    //console.log(Code[0].value);
+    //console.log(getParams("clientId"));
+    //window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
+    window.location.href="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
+    }
    function createClientTable(params){
    	$('#contacts_list').bootstrapTable('destroy');
+    postOrderData = function (params) {
+        var temp = {
+            // limit: params.limit,   //页面大小，后端处理分页时，需要提供
+            // offset: params.offset,  //页码，后端处理分页时，需要提供
+            //"zoneID": $('#zoneID').val(),
+            //"channelID": $('#channelID').val(),
+            "clientId": 34
+        };
+        return temp;
+    };
    	$('#contacts_list').bootstrapTable({
    		url:'/crmapp/clientcontactsdata',
    		method:'post',
    		contentType:"application/x-www-form-urlencoded; charset=UTF-8", // 默认是：'application/json'， 不改的话，后台获取不到数据！ ###### 非常重要！！######
-   		queryParams: '',   //查询参数
+   		queryParams: postOrderData,   //查询参数
         cache: false,   //是否启用 数据缓存
         pagination: true,  //是都分页
         sidePageination: 'client',   //谁来分页，客户端：'client'，服务端：'server'
@@ -158,13 +192,14 @@ $(document).ready(function () {
      //-->
    }
 </SCRIPT>
-
 {% endblock %}
+
 {% block content %}
 
 <div  class="form-wrapper">
 	
-	<form method="post" action="/crmapp/managecliencontacts">
+	<!--<form method="post" action="/crmapp/managecliencontacts">-->
+        <form method="get" action="" id="contact_form">
 		{% if form.errors %}
 			{% include "user_clients/partials/errors.html" %}
 		{% endif %}
@@ -203,9 +238,14 @@ $(document).ready(function () {
 		<br>
 
 		<div class="button-wrapper submit">
+		<a href="javascript:void(0);" onclick="managerContacts()">
+       <input class="btn btn-primary" type="submit" value="{% trans '新增联系人' %}" >         
+        </a>
 			
-			<input class="btn btn-primary" type="submit" value="{% trans '新增客户' %}">
+      <a href="javascript:history.go(-1);">
+        <input class="btn btn-primary" type="btn" value="{% trans '返回' %}" id="btnBack">
 
+      </a>
 			
 		</div>	
 	</form>

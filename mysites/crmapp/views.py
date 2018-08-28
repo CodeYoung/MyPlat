@@ -139,7 +139,7 @@ def managecontacts(request):
 	
 	if request.method=="POST":
 		print(request.POST)
-		client_id=request.POST['Client']
+		client_id=request.POST['clientId']
 		#print(client_code)
 		client=Client.objects.get(pk=client_id)
 		if client:
@@ -168,6 +168,7 @@ def managecontacts(request):
 			return HttpResponseRedirect('/')
 	else:
 		if request.method=="GET":
+			print(request.GET)
 			client_id=request.GET['clientId']
 		else:
 			client_id=request.POST['clientId']
@@ -183,13 +184,15 @@ def managecontacts(request):
 
 
 def searchclientcontacts(request):
-	if request.method=="GET":
 
+	if request.method=="GET":
+		print(1)
 		client_id=request.GET['clientId']
 		print(request.GET['clientId'])
 	else:
+		#print(request.POST['clientId'])
 		client_id=request.POST['clientId']
-		print(request.GET['clientId'])
+		#print(request.POST['clientId'])
 		#print(client_code)
 	client=Client.objects.get(pk=34)
 	if client:
@@ -204,7 +207,7 @@ def searchclientcontacts(request):
 	else:
 		returnData={"rows":[]} #########非常重要############
 		for contact in contactsList:
-			print(contact.Name)
+			#print(contact.Name)
 			if contact.Contacts is None:
 				contacts=""
 			else:
