@@ -27,7 +27,7 @@ else:
 def index(request):
     return render(request,'base.html')
 
-@csrf_protect
+#@csrf_protect
 @never_cache
 def register(request,
              template_name='users/registration_form.html',
