@@ -167,17 +167,31 @@ def managecontacts(request):
 			#client.save()
 			return HttpResponseRedirect('/')
 	else:
-		return searchclientcontacts(request)
+		if request.method=="GET":
+			client_id=request.GET['clientId']
+		else:
+			client_id=request.POST['clientId']
+			#print(client_code)
+		client=Client.objects.get(pk=client_id)
+		if client:
+			contactsList=Contacts.objects.filter(Client=client)
+		else:
+			print('对应的客户不存在')
+		#return HttpResponseRedirect('/')
+		return render(request,'client_contacts/client_contacts.html',{'contactsList':contactsList})
+		#return searchclientcontacts(request)
 
 
 def searchclientcontacts(request):
 	if request.method=="GET":
 
 		client_id=request.GET['clientId']
+		print(request.GET['clientId'])
 	else:
 		client_id=request.POST['clientId']
+		print(request.GET['clientId'])
 		#print(client_code)
-	client=Client.objects.get(pk=client_id)
+	client=Client.objects.get(pk=34)
 	if client:
 		contactsList=Contacts.objects.filter(Client=client)
 	else:
