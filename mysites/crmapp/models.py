@@ -2,6 +2,8 @@
 from django.db import models
 from users.models import User
 
+import uuid
+
 # Create your models here.
 
 #基础对象
@@ -11,7 +13,7 @@ class BaseObject(models.Model):
 	#	super(BaseObject, self).__init__()
 	#	self.arg = arg
 	#ID=models.IntegerField(default=1)
-	Code=models.CharField(max_length=50,default='default code')
+	Code=models.CharField(max_length=50,default=uuid.uuid1())
 	Name=models.CharField(max_length=50,default='default name')
 	CreateTime=models.DateTimeField(u'新建时间',auto_now_add=True,editable=True)	
 	ModifyTime=models.DateTimeField(u'修改时间',auto_now_add=True,editable=True)
@@ -34,20 +36,22 @@ class Contacts(BaseObject):
 	#def __init__(self, arg):
 	#	super(ClassName, self).__init__()
 	#	self.arg = arg
-	Phone=models.IntegerField()
+	Phone=models.IntegerField(null=True,blank=True,verbose_name='联系电话')
 	#联系人所属客户
-	Client=models.ForeignKey('Client', related_name = 'Client',on_delete=models.CASCADE)
+	Client=models.ForeignKey('Client', related_name = 'Client',on_delete=models.CASCADE,verbose_name='客户')
 	#该联系人角色
-	Role=models.CharField(max_length=100)
+	Role=models.CharField(max_length=100,null=True,blank=True,verbose_name='角色')
 	#Remark特殊点
 	#职位
-	Position=models.CharField(max_length=100)
-	WeChat=models.CharField(max_length=100)
-	QQ=models.CharField(max_length=50)
+	Position=models.CharField(max_length=100,null=True,blank=True,verbose_name='职位')
+	WeChat=models.CharField(max_length=100,null=True,blank=True,verbose_name='微信')
+	QQ=models.CharField(max_length=50,null=True,blank=True)
 	Email=models.EmailField(
-        ('email address'), max_length=255, unique=True, db_index=True)
+        ('邮箱'), max_length=255, unique=True, db_index=True,null=True,blank=True)
 	#关联联系人
-	Contacts=models.ForeignKey('self',related_name='RelationContacts',on_delete=models.CASCADE)
+	Contacts=models.ForeignKey('self',related_name='RelationContacts',on_delete=models.CASCADE,null=True,blank=True,verbose_name='关联联系人')
+	def __str__(self):
+		return self.Name
 
 		
 #跟进记录
@@ -67,7 +71,7 @@ class Client(BaseObject):
 	#def __init__(self, arg):
 	#	super(Client, self).__init__()
 	#	self.arg = arg
-	CompanyName=models.CharField(max_length=50,verbose_name='所属公司')
+	CompanyName=models.CharField(max_length=50,verbose_name='项目名称')
 	#所属销售
 	Owner=models.ForeignKey(User, related_name = 'Clients',on_delete=models.CASCADE,verbose_name='所属销售')
 	#所属行业
@@ -75,7 +79,7 @@ class Client(BaseObject):
 	#意向产品
 	IntentionalProducts=models.CharField(max_length=100,verbose_name='意向产品',null=True,blank=True)
 	#购买点数
-	PurchasePoint=models.IntegerField(verbose_name='购买点数',null=True,blank=True)
+	PurchasePoint=models.IntegerField(verbose_name='购买点数',null=True,blank=True,default=0)
 	#跟进记录
 	FollowRecord=models.CharField(max_length=1000,verbose_name='跟进记录',null=True,blank=True)
 	#关联客户

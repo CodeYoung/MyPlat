@@ -1,7 +1,56 @@
 {% extends "base_crm.html" %}
 {% load i18n %}
+{% block title %}修改用户{% endblock%}
+{% block scriptstyle %}
 
+<SCRIPT LANGUAGE="JavaScript">
+	window.onload = function(){
+   	console.log("start");
+    //getCode("Code")
+    
+   }
+   function getParams(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        };
+	
+	function managerContacts()
+	{
+		//var Code = document.getElementsByName('Code');
+		//console.log(Code[0].value);
+		//console.log(getParams("clientId"));
+		//window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
+		window.location.href="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
+	}
+	
+</SCRIPT>
+
+{% endblock %}
 {% block content %}
+<div>
+	<label style="padding-left:10px;">当前用户：
+
+		{% for field in form %}
+			
+			{% if field.label == '项目名称' %}
+				{{ field.value }}
+			{% endif %}
+		{% endfor %}
+	</label>
+
+	<a href="javascript:void(0);" onclick="managerContacts()">
+		<input id="managerContacts" style="margin-left:50px" type=button color="red" value="联系人管理">
+	</a>
+	<a href="/">
+	<input id="clientList" style="margin-left:50px" type=button color="red" value="客户列表">
+	</a>
+
+	
+</div>
 <div class="form-wrapper">
 	<form method="post" action=".">
 		{% if form.errors %}
@@ -9,7 +58,12 @@
 		{% endif %}
 		{% csrf_token %}
 		{% for field in form %}
+			{% if field.label == '项目名称' or field.label == 'Code' %}
+				
+			{% else %}
 			{% include "user_clients/partials/field.html" %}
+			{% endif %}
+			
 		{% endfor %}
 		<div class="button-wrapper submit">
 			<br>

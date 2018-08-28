@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+#import sys
+#reload(sys)
+#sys.setdefaultencoding('utf8')
 from django.shortcuts import render,redirect,reverse
 from django.http import HttpResponseRedirect,HttpResponse
 import json
@@ -8,6 +11,8 @@ from django.views.decorators.csrf import csrf_protect
 from crmapp.models import Client
 
 from .forms import *
+
+import uuid
 # Create your views here.
 
 def index(request):
@@ -31,6 +36,7 @@ def getuserclients(request):
 
 def adduserclient(request):
 	if request.method=="POST":
+		
 		form=ClientForm(request.POST)
 		print(request.POST)
 		client=Client()
@@ -40,16 +46,19 @@ def adduserclient(request):
 			#print(type(form.clean()))
 			#print(form.clean())
 			for item in form.clean():
-				setattr(client,item,form.clean()[item])
-				print(item)
+				if item=='Code':
+					setattr(client,item,uuid.uuid1())
+				else:
+					setattr(client,item,form.clean()[item])
+				#print(item)
 			client.save()
 			
-			print(client.Address)
-			print(client.CompanyName)	
+			#print(client.Address)
+			#print(client.CompanyName)	
 				#print(form.clean()[item])
 			#client=Client(request.POST)
 			#client.save()
-			return HttpResponseRedirect('/')
+			return HttpResponseRedirect('/crmapp/editclient/'+str(client.id))
 	else:
 		form=ClientForm()
 		return render(request,'user_clients/client_form.html',{'form':form})
@@ -92,9 +101,12 @@ def searchUserClients(request):
 	#最后用dumps包装下
 	return HttpResponse(json.dumps(returnData))#render(request,'user_clients/user_clients.html',{'clients':clients})
 
-def editclient(request,client_id):
-	client=Client.objects.get(pk=client_id)
+def editclient(request):
+
+	
 	if request.method=='POST':
+		client_id=request.POST['clientId']
+		client=Client.objects.get(pk=client_id)
 		print("POST")
 		form=ClientForm(request.POST,instance=client)
 		print(form)
@@ -104,9 +116,12 @@ def editclient(request,client_id):
 			print(baseUrl)
 			return redirect(baseUrl)
 	else:
+		client_id=request.GET['clientId']
+		client=Client.objects.get(pk=client_id)
 		#print("get")
 		form=ClientForm(instance=client)
-		#print(form)
+		#print(type(form))
+		print(form)
 	return render(request,'user_clients/client_editform.html',{'form':form})
 	
 	#form=ClientForm()
@@ -119,3 +134,78 @@ def deleteclient(request,client_id):
 	print(baseUrl)
 	return redirect(baseUrl)
 	
+
+def managecontacts(request):
+	
+	if request.method=="POST":
+		print(request.POST)
+		client_id=request.POST['Client']
+		#print(client_code)
+		client=Client.objects.get(pk=client_id)
+		if client:
+			contactsList=Contacts.objects.filter(Client=client)
+		else:
+			print('对应的客户不存在')
+			return HttpResponseRedirect('/')
+		form=ContactsForm(request.POST)
+		print(request.POST)
+		contacts=Contacts()
+		#companyname=client._meta.get_field('CompanyName')
+		#print(type(companyname))
+		if form.is_valid():
+			#print(type(form.clean()))
+			#print(form.clean())
+			for item in form.clean():
+				setattr(contacts,item,form.clean()[item])
+				print(item)
+			contacts.save()
+			
+			#print(client.Address)
+			#print(client.CompanyName)	
+				#print(form.clean()[item])
+			#client=Client(request.POST)
+			#client.save()
+			return HttpResponseRedirect('/')
+	else:
+		return searchclientcontacts(request)
+
+
+def searchclientcontacts(request):
+	if request.method=="GET":
+
+		client_id=request.GET['clientId']
+	else:
+		client_id=request.POST['clientId']
+		#print(client_code)
+	client=Client.objects.get(pk=client_id)
+	if client:
+		contactsList=Contacts.objects.filter(Client=client)
+	else:
+		print('对应的客户不存在')
+		return HttpResponseRedirect('/')
+	if contactsList==None or len(contactsList)==0:
+		form=ContactsForm()
+		print(form)
+		return render(request,'client_contacts/contacts_form.html',{'form':form})
+	else:
+		returnData={"rows":[]} #########非常重要############
+		for contact in contactsList:
+			print(contact.Name)
+			if contact.Contacts is None:
+				contacts=""
+			else:
+				contacts=contact.Contacts.Name
+			returnData['rows'].append({
+				"id":contact.id,
+				"Name":contact.Name,
+				"Phone":contact.Phone,
+				"Client":contact.Client.CompanyName,
+				"Role":contact.Role,
+				"Position":contact.Position,
+				"WeChat":contact.WeChat,
+				"QQ":contact.QQ,
+				"Email":contact.Email,
+				"Contacts":contacts,
+					})	
+		#最后用dumps包装下
+		return HttpResponse(json.dumps(returnData))#render(request,'user_clients/user_clients.html',{'clients':clients})

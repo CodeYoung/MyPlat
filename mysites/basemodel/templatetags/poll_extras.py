@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django import template
 import time
 from datetime import datetime

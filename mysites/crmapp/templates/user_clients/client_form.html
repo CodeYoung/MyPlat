@@ -1,6 +1,6 @@
 {% extends "base_crm.html" %}
 {% load i18n %}
-
+{% block title %}新增用户{% endblock%}
 {% block content %}
 <div class="form-wrapper">
 	<form method="post" action="/crmapp/addclient">
@@ -9,8 +9,18 @@
 		{% endif %}
 		{% csrf_token %}
 		{% for field in form %}
+			
+			{% if field.label == 'Code' %}
+			<!--<label>联系人</label>
+			<a href="addcliencontacts">
+				<br>
+				<input type="Button" name="AddContacts" value="新增联系人">
+			</a>-->
+			{% else %}
 			{% include "user_clients/partials/field.html" %}
+			{% endif %}
 		{% endfor %}
+		
 		<div class="button-wrapper submit">
 			<br>
 			<input type="submit" value="{% trans '保存' %}" />
