@@ -145,7 +145,7 @@
         	align:'left',
         	halign:'center'
         },{field:"action",title:"操作",align:"center",formatter:function(value,row,index){
-                    var strHtml ='<a href="/crmapp/editclient?clientId='+ row.id +'"><li class="glyphicon glyphicon-pencil"></li></a>'+
+                    var strHtml ='<a href="/crmapp/editclient/'+ row.id +'/"><li class="glyphicon glyphicon-pencil"></li></a>'+
                         '<a href="/crmapp/deleteclient/'+ row.id +'/" style="margin-left:5px;"><li class="glyphicon glyphicon-remove"></li></a>';
                     return strHtml;
                 },edit:false}],

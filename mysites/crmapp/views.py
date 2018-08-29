@@ -101,11 +101,11 @@ def searchUserClients(request):
 	#最后用dumps包装下
 	return HttpResponse(json.dumps(returnData))#render(request,'user_clients/user_clients.html',{'clients':clients})
 
-def editclient(request):
+def editclient(request,clientId):
 
 	
 	if request.method=='POST':
-		client_id=request.POST['clientId']
+		client_id=clientId#request.POST['clientId']
 		client=Client.objects.get(pk=client_id)
 		print("POST")
 		form=ClientForm(request.POST,instance=client)
@@ -116,7 +116,7 @@ def editclient(request):
 			print(baseUrl)
 			return redirect(baseUrl)
 	else:
-		client_id=request.GET['clientId']
+		client_id=clientId#request.GET['clientId']
 		client=Client.objects.get(pk=client_id)
 		#print("get")
 		form=ClientForm(instance=client)
@@ -182,6 +182,38 @@ def managecontacts(request):
 		return render(request,'client_contacts/client_contacts.html',{'contactsList':contactsList})
 		#return searchclientcontacts(request)
 
+def clientContacts(request):
+	form=ContactsForm()
+	return render(request,'client_contacts/contacts_form.html',{'form':form})
+
+def addClientContacts(request):
+	if request.method=="POST":
+		
+		form=ContactsForm(request.POST)
+		print(request.POST)
+		contacts=Contacts()
+		#companyname=client._meta.get_field('CompanyName')
+		#print(type(companyname))
+		if form.is_valid():
+			#print(type(form.clean()))
+			#print(form.clean())
+			for item in form.clean():
+				if item=='Code':
+					setattr(contacts,item,uuid.uuid1())
+				else:
+					setattr(contacts,item,form.clean()[item])
+				#print(item)
+			contacts.save()
+			
+			#print(client.Address)
+			#print(client.CompanyName)	
+				#print(form.clean()[item])
+			#client=Client(request.POST)
+			#client.save()
+			return HttpResponseRedirect('/crmapp/managecliencontacts?clientId='+str(contacts.Client.id))
+	else:
+		form=ContactsForm()
+		return render(request,'client_contacts/contacts_form.html',{'form':form}) 
 
 def searchclientcontacts(request):
 
@@ -226,3 +258,41 @@ def searchclientcontacts(request):
 					})	
 		#最后用dumps包装下
 		return HttpResponse(json.dumps(returnData))#render(request,'user_clients/user_clients.html',{'clients':clients})
+
+def deleteContacts(request,contacts_id):
+	print(contacts_id)
+	contacts=Contacts.objects.get(pk=contacts_id) #删除数据
+	clientId=contacts.Client.id
+	contacts.delete()
+	print(contacts)
+	baseUrl='/crmapp/managecliencontacts?clientId='+str(clientId) #"/".join(request.path.split("/")[:-2])
+	print(baseUrl)
+	return redirect(baseUrl)
+
+def editContacts(request,contacts_id):
+
+	
+	if request.method=='POST':
+		contacts_id=contacts_id#request.POST['contactsId']
+		contacts=Contacts.objects.get(pk=contacts_id)
+		print("POST")
+		form=ContactsForm(request.POST,instance=contacts)
+		print(1)
+		if form.is_valid():
+			print(2)
+			form.save()
+			print(3)
+			baseUrl='/crmapp/managecliencontacts?clientId='+str(contacts.Client.id)#"/".join(request.path.split("/")[:-2])
+			print(3)
+			print(baseUrl)
+			return redirect(baseUrl)
+		else:
+			print(4)
+	else:
+		contacts_id=contacts_id#request.GET['contactsId']
+		contacts=Contacts.objects.get(pk=contacts_id)
+		#print("get")
+		form=ContactsForm(instance=contacts)
+		#print(type(form))
+		print(form)
+	return render(request,'client_contacts/contacts_editform.html',{'form':form})

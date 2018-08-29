@@ -1,9 +1,42 @@
 {% extends "base_crm.html" %}
 {% load i18n %}
-{% block title %}修改用户{% endblock%}
+{% block title %}修改联系人{% endblock%}
+{% block scriptstyle %}
+<SCRIPT LANGUAGE="JavaScript">
+	window.onload = function(){
+   	console.log("start");
+    setClient();
+    
+   }
+   function getParams(key) {
+            var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) {
+                return unescape(r[2]);
+            }
+            return null;
+        };
+	
+	function setClient()
+	{
+		var Client = document.getElementById('id_Client');
+		console.log(Client);
+		//Client.value=getParams("clientId");
+		Client.disabled='disabled';
+		//console.log(getParams("clientId"));
+		//window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
+		//window.location.href="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
+	}
+	function getClient()
+	{
+		$("#id_Client").removeAttr("disabled"); 
+	};
+	
+</SCRIPT>
+{% endblock %}
 {% block content %}
 <div class="form-wrapper">
-	<form method="post" action=".">
+	<form method="post" action="">
 		{% if form.errors %}
 			{% include "user_clients/partials/errors.html" %}
 		{% endif %}
