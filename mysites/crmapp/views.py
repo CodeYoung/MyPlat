@@ -40,11 +40,13 @@ def adduserclient(request):
 		form=ClientForm(request.POST)
 		print(request.POST)
 		client=Client()
+		print(form)
 		#companyname=client._meta.get_field('CompanyName')
 		#print(type(companyname))
 		if form.is_valid():
+			print("is_valid")
 			#print(type(form.clean()))
-			#print(form.clean())
+			print(form.clean())
 			for item in form.clean():
 				if item=='Code':
 					setattr(client,item,uuid.uuid1())
@@ -59,6 +61,9 @@ def adduserclient(request):
 			#client=Client(request.POST)
 			#client.save()
 			return HttpResponseRedirect('/crmapp/editclient/'+str(client.id))
+		else:
+			print("not_valid")
+			
 	else:
 		form=ClientForm()
 		return render(request,'user_clients/client_form.html',{'form':form})
@@ -110,11 +115,19 @@ def editclient(request,clientId):
 		print("POST")
 		form=ClientForm(request.POST,instance=client)
 		print(form)
+		#print(str(form.clean()))
 		if form.is_valid():
+			print('is_valid')
+			#for item in form.clean():
+			#		setattr(client,item,form.clean()[item])
+				#print(item)
+			#client.save()
 			form.save()
 			baseUrl="/"#"/".join(request.path.split("/")[:-2])
 			print(baseUrl)
 			return redirect(baseUrl)
+		else:
+			print('not valid')
 	else:
 		client_id=clientId#request.GET['clientId']
 		client=Client.objects.get(pk=client_id)

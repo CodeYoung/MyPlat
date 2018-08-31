@@ -10,6 +10,7 @@ class ClientForm(forms.ModelForm):
 	def __init__(self, *arg,**kwargs):
 		super(ClientForm, self).__init__(*arg,**kwargs)
 		for field_name in self.base_fields:
+			#print(str(field_name)+':'+str(self.base_fields[field_name]))
 			field=self.base_fields[field_name]
 			field.widget.attrs.update({"class":"form-control"})
 		#self.arg = arg
@@ -23,8 +24,19 @@ class ClientForm(forms.ModelForm):
 	class Meta:
 		"""docstring for Meta"""
 		model=Client
-		fields=['Code','CompanyName','Owner','Industry','IntentionalProducts','PurchasePoint','FollowRecord','Clients','ProjectProcess','Contacts','Address']
+		exclude = ()
+		fields=['CompanyName','Owner','Industry','IntentionalProducts','PurchasePoint','FollowRecord','Clients','ProjectProcess','Contacts','Address']
 
+#class ClientAddForm(forms.ModelForm):
+#	"""docstring for ClientAddForm"""
+#	def __init__(self, arg):
+#		super(ClientAddForm, self).__init__()
+#		self.arg = arg
+
+#	class Meta:
+#		model=Client
+#		fields=['CompanyName','Owner','Industry','IntentionalProducts','PurchasePoint','FollowRecord','Clients','ProjectProcess','Contacts','Address']
+		
 
 class ContactsForm(forms.ModelForm):
 	"""docstring for AddContacts"""

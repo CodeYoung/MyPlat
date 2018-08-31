@@ -29,13 +29,26 @@
 		//window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
 		window.location.href="/crmapp/managecliencontacts?clientId="+getParams("editclient"); 
 	}
-	
-</SCRIPT>
+	function setClient()
+	{
+		//var Client = document.getElementById('id_CompanyName');
+		//console.log(Client);
+		//Client.value=getParams("clientId");
+		//Client.disabled='disabled';
+		//console.log(getParams("clientId"));
+		//window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
+		//window.location.href="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
+	}
+	function getClient()
+	{
+		//$("#id_CompanyName").removeAttr("disabled"); 
+	};
+</SCRIPT>-
 
 {% endblock %}
 {% block content %}
 <div>
-	<label style="padding-left:10px;">当前用户：
+	<!--<label style="padding-left:10px;">当前用户：
 
 		{% for field in form %}
 			
@@ -43,7 +56,7 @@
 				{{ field.value }}
 			{% endif %}
 		{% endfor %}
-	</label>
+	</label>-->
 
 	<a href="javascript:void(0);" onclick="managerContacts()">
 		<input id="managerContacts" style="margin-left:50px" type=button color="red" value="联系人管理">
@@ -61,11 +74,11 @@
 		{% endif %}
 		{% csrf_token %}
 		{% for field in form %}
-			{% if field.label == '项目名称' or field.label == 'Code' %}
+			<!--{% if field.label == '项目名称' or field.label == 'Code' %}
 				
-			{% else %}
+			{% else %}-->
 			{% include "user_clients/partials/field.html" %}
-			{% endif %}
+			<!--{% endif %}-->
 			
 		{% endfor %}
 		<div class="button-wrapper submit">
