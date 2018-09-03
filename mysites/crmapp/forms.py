@@ -24,7 +24,6 @@ class ClientForm(forms.ModelForm):
 	class Meta:
 		"""docstring for Meta"""
 		model=Client
-		exclude = ()
 		fields=['CompanyName','Owner','Industry','IntentionalProducts','PurchasePoint','FollowRecord','Clients','ProjectProcess','Contacts','Address']
 
 #class ClientAddForm(forms.ModelForm):

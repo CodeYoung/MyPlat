@@ -1,3 +1,4 @@
+
 {% extends "base_crm.html" %}
 {% load i18n %}
 {% block title %}修改用户{% endblock%}
@@ -7,7 +8,7 @@
 	window.onload = function(){
    	console.log("start");
     //getCode("Code")
-    
+    setClient()
    }
    function getParams(key) {
             var reg = new RegExp("(^|&)" + key + "/([^&]*)(&|$)");
@@ -31,24 +32,24 @@
 	}
 	function setClient()
 	{
-		//var Client = document.getElementById('id_CompanyName');
+		var Client = document.getElementById('id_CompanyName');
 		//console.log(Client);
 		//Client.value=getParams("clientId");
-		//Client.disabled='disabled';
+		Client.disabled='disabled';
 		//console.log(getParams("clientId"));
 		//window.location.href="/crmapp/managecliencontacts?clientId="+Code[0].value; 
 		//window.location.href="/crmapp/managecliencontacts?clientId="+getParams("clientId"); 
 	}
 	function getClient()
 	{
-		//$("#id_CompanyName").removeAttr("disabled"); 
+		$("#id_CompanyName").removeAttr("disabled"); 
 	};
-</SCRIPT>-
+</SCRIPT>
 
 {% endblock %}
 {% block content %}
 <div>
-	<!--<label style="padding-left:10px;">当前用户：
+	<label style="padding-left:10px;">当前用户：
 
 		{% for field in form %}
 			
@@ -56,7 +57,7 @@
 				{{ field.value }}
 			{% endif %}
 		{% endfor %}
-	</label>-->
+	</label>
 
 	<a href="javascript:void(0);" onclick="managerContacts()">
 		<input id="managerContacts" style="margin-left:50px" type=button color="red" value="联系人管理">
@@ -68,18 +69,22 @@
 	
 </div>
 <div class="form-wrapper">
-	<form method="post" action=".">
+	<form method="post" action="." onsubmit="getClient()">
 		{% if form.errors %}
 			{% include "user_clients/partials/errors.html" %}
 		{% endif %}
 		{% csrf_token %}
 		{% for field in form %}
-			<!--{% if field.label == '项目名称' or field.label == 'Code' %}
-				
-			{% else %}-->
-			{% include "user_clients/partials/field.html" %}
-			<!--{% endif %}-->
 			
+			{% if field.label == 'Code' %}
+			<!--<label>联系人</label>
+			<a href="addcliencontacts">
+				<br>
+				<input type="Button" name="AddContacts" value="新增联系人">
+			</a>-->
+			{% else %}
+			{% include "user_clients/partials/field.html" %}
+			{% endif %}
 		{% endfor %}
 		<div class="button-wrapper submit">
 			<br>

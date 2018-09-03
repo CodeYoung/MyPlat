@@ -239,7 +239,7 @@ def searchclientcontacts(request):
 		client_id=request.POST['clientId']
 		#print(request.POST['clientId'])
 		#print(client_code)
-	client=Client.objects.get(pk=34)
+	client=Client.objects.get(pk=client_id)
 	if client:
 		contactsList=Contacts.objects.filter(Client=client)
 	else:
@@ -290,7 +290,7 @@ def editContacts(request,contacts_id):
 		contacts=Contacts.objects.get(pk=contacts_id)
 		print("POST")
 		form=ContactsForm(request.POST,instance=contacts)
-		print(1)
+		print(form)
 		if form.is_valid():
 			print(2)
 			form.save()

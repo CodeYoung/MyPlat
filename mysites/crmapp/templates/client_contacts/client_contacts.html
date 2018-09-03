@@ -19,7 +19,7 @@
 	line-height:40px;
 	margin:0 auto;
 	}
-  #btnBack{
+  .btn{
     width: 100px;
     height: 35px;
     text-align: center;
@@ -53,12 +53,12 @@
    }
         function getParams(key) {
             var reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
-            var r = window.location.href.split('/')//window.location.search.substr(1).match(reg);
+            var r = window.location.search.substr(1).match(reg);//window.location.href.split('/')//window.location.search.substr(1).match(reg);
             console.log(r[r.length-2]);
             console.log(window.location);
             if (r != null) {
-                return unescape(r[r.length-2])
-                //return unescape(r[2]);
+                //return unescape(r[r.length-2])
+                return unescape(r[2]);
             }
             return null;
         };
@@ -81,7 +81,8 @@
             // offset: params.offset,  //页码，后端处理分页时，需要提供
             //"zoneID": $('#zoneID').val(),
             //"channelID": $('#channelID').val(),
-            "clientId": 34
+            "clientId": getParams("clientId")
+
         };
         return temp;
     };
