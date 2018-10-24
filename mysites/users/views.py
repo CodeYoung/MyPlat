@@ -12,6 +12,9 @@ from .compat import urlsafe_base64_decode
 from .conf import settings
 from .signals import user_activated, user_registered
 from .utils import EmailActivationTokenGenerator, send_activation_email
+from users.models import User
+from django.http import HttpResponseRedirect,HttpResponse,JsonResponse
+#import json
 
 try:
     from django.contrib.sites.shortcuts import get_current_site
@@ -170,3 +173,27 @@ def activation_complete(request,
     if extra_context is not None:  # pragma: no cover
         context.update(extra_context)
     return TemplateResponse(request, template_name, context)
+
+
+#@api_view(['POST','GET'])
+def socklogin(request,*args):
+    if(request.method=='GET'):
+        account=request.GET['account']
+        password=request.GET['password']
+    if(request.method=='POST'):
+        account=request.data['account']
+        password=request.data['password']
+    print('account:'+account)
+    print('password:'+password)
+    user=User.objects.filter(Phone=account)
+    print(len(user))
+    if(len(user)==0):
+        return JsonResponse({'resultCode':'-1','msg':'该账号不存在！'},safe=False,json_dumps_params={'ensure_ascii': False})
+        #return JsonResponse({'resultCode':'-1','msg':'该账号不存在！'})
+    else:
+        print(user[0].PassWord)
+        if(user[0].PassWord!=password):
+            return JsonResponse({'resultCode':'-1','msg':'密码不正确！请重新输入'},safe=False,json_dumps_params={'ensure_ascii': False})
+            #return JsonResponse({'resultCode':'-1','msg':'密码不正确！请重新输入'})
+    return JsonResponse({'resultCode':'-1','msg':'True'},safe=False,json_dumps_params={'ensure_ascii': False})
+    #return JsonResponse({'resultCode':'1','msg':'True'})

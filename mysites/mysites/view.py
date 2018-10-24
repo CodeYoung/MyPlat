@@ -28,3 +28,4 @@ def sendemail(request):
 	context['hello'] = 'Hello World!'
 	send_mail('第一次邮件','这是第一次右键的内容',settings.DEFAULT_FROM_EMAIL,['1063991013@qq.com'],fail_silently=False)
 	return render(request, 'index.html', context)
+

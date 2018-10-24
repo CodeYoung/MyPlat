@@ -27,8 +27,8 @@ def index(request):
 def getuserclients(request):	
 	if request.user.is_authenticated:
 		clients=Client.objects.filter(Owner=request.user)
-		print('user is authenticated')
-		print(clients)
+		#print('user is authenticated')
+		#print(clients)
 		return render(request,'user_clients/user_clients.html',{'clients':clients})
 	else:
 		return render(request,'base_crm.html')
@@ -134,7 +134,7 @@ def editclient(request,clientId):
 		#print("get")
 		form=ClientForm(instance=client)
 		#print(type(form))
-		print(form)
+		#print(form)
 	return render(request,'user_clients/client_editform.html',{'form':form})
 	
 	#form=ClientForm()

@@ -3,7 +3,7 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 
 from .views import (activate, activation_complete, register,
-                    registration_closed, registration_complete)
+                    registration_closed, registration_complete,socklogin)
 
 urlpatterns = [
     url(r'^register/$', register, name='users_register'),
@@ -48,4 +48,5 @@ urlpatterns = [
     url(r'^reset/done/$', auth_views.PasswordResetCompleteView.as_view(
         template_name='users/password_reset_complete.html'),
         name='users_password_reset_complete'),
+    url(r'^sockLogin/$',socklogin),
 ]
